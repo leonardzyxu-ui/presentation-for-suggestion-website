@@ -10,13 +10,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <!-- Custom Styles for Light Theme and Timeline -->
+    <!-- Custom Styles for Tahoe-inspired Blue Theme -->
     <style>
         /* Base Light Theme and Font */
         body {
             font-family: 'Inter', sans-serif;
-            /* Cool Light Gradient Background (Subtle Teal/Cyan Fade) */
-            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2f1 100%); 
+            /* UPDATED: Darker Tahoe-inspired Gradient: Light Blue-200 to Light Blue-50 */
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); 
             color: #1f2937; /* Dark text for contrast */
         }
         /* Card Background */
@@ -27,19 +27,17 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
         }
 
-        /* Gradient Text for Header */
+        /* Gradient Text for Header: Applied to the entire title */
         .gradient-text {
-            background-image: linear-gradient(to right, #2dd4bf, #059669, #3b82f6); /* Using brighter teal/cyan */
+            /* Consistent Gradient: Light Blue -> Medium Blue -> Deep Indigo */
+            background-image: linear-gradient(to right, #60a5fa, #3b82f6, #1d4ed8); 
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
         }
 
-        /* Custom Grass Green for STUCO */
-        .stuco-green {
-            color: #4CAF50; /* A good, clean grass green */
-        }
+        /* UNUSED: Removed .stuco-blue-dark since STUCO is now part of the gradient */
 
         /* Active Tab Styling */
         .tab-button {
@@ -47,8 +45,8 @@
         }
         .tab-button.active {
             border-bottom-width: 3px;
-            /* Use Teal/Cyan for the active indicator */
-            border-color: #2dd4bf; 
+            /* Medium Blue for the active indicator */
+            border-color: #3b82f6; 
             color: #1f2937; 
             font-weight: 600;
         }
@@ -65,8 +63,8 @@
             top: 0;
             left: 1rem; 
             width: 3px;
-            height: 100%;
             background-color: #e5e7eb; 
+            height: 100%;
         }
         /* Dot position */
         .timeline-dot {
@@ -76,8 +74,8 @@
             width: 1rem;
             height: 1rem;
             border-radius: 50%;
-            /* Default Dot Color (changed from blue to teal) */
-            background-color: #2dd4bf; 
+            /* Default Dot Color (Medium Blue) */
+            background-color: #3b82f6; 
             z-index: 10;
         }
         .timeline-item {
@@ -94,6 +92,15 @@
             height: 400px;
             margin: auto;
         }
+        
+        /* Consistent Accent Color for Phase 1/2 boxes */
+        .accent-box-bg {
+            background-color: #eff6ff; /* Lightest Blue-50 */
+            border-color: #bfdbfe; /* Light Blue-200 */
+        }
+        .accent-text-color {
+            color: #1e40af; /* Deep Blue-800, the "slightly-dark-blue" */
+        }
     </style>
 </head>
 <body>
@@ -104,8 +111,8 @@
         <!-- Header - Scroll Effect applied -->
         <header id="main-header" class="py-8 text-center border-b border-gray-200 transition-all duration-100 ease-out">
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                <!-- STUCO in the new grass green color and now italic -->
-                <span class="stuco-green italic">STUCO</span> <span class="gradient-text">Feedback Portal</span> Dashboard
+                <!-- UPDATED: All words inside the gradient-text span for continuous effect -->
+                <span class="gradient-text">STUCO Feedback Portal Dashboard</span>
             </h1>
             <!-- Updated Subtitle -->
             <p class="mt-2 text-lg text-gray-600">Comprehensive Project Outline & Proposal</p>
@@ -169,17 +176,18 @@
                         An immediate, low-resource deployment targeting Years 6-8 to test the concept and gather initial data.
                     </p>
 
+                    <!-- Applied new blue accent classes -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-cyan-50 p-4 rounded-lg border border-cyan-200">
-                            <h3 class="text-xl font-semibold text-cyan-700 mb-2">Scope & Tools</h3>
+                        <div class="accent-box-bg p-4 rounded-lg border">
+                            <h3 class="text-xl font-semibold accent-text-color mb-2">Scope & Tools</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
                                 <li><span class="font-bold">Tool:</span> Microsoft Forms (Existing School License).</li>
                                 <li><span class="font-bold">Target Audience:</span> Students in Years 6, 7, and 8.</li>
                                 <li><span class="font-bold">Data Collection:</span> Focused on core teaching suggestions only.</li>
                             </ul>
                         </div>
-                        <div class="bg-cyan-50 p-4 rounded-lg border border-cyan-200">
-                            <h3 class="text-xl font-semibold text-cyan-700 mb-2">Action Plan</h3>
+                        <div class="accent-box-bg p-4 rounded-lg border">
+                            <h3 class="text-xl font-semibold accent-text-color mb-2">Action Plan</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
                                 <li>STUCO creates form with branching logic for teacher selection.</li>
                                 <li>Launch next week via tutor group announcements.</li>
@@ -225,25 +233,26 @@
                         Implementation of the full-featured, secure web application, offering advanced functionality for teachers, students, and administration.
                     </p>
 
+                    <!-- Applied new blue accent classes -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="p-4 rounded-xl bg-cyan-50 border border-cyan-200">
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Student Experience</h3>
+                        <div class="accent-box-bg p-4 rounded-xl border">
+                            <h3 class="text-xl font-bold accent-text-color mb-2">Student Experience</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
                                 <li>Secure login via Microsoft (SSO).</li>
                                 <li>Categorized feedback options (Teacher, Policy, Facility, Other).</li>
                                 <li>Flexible anonymity option with traceability for inappropriate content.</li>
                             </ul>
                         </div>
-                        <div class="p-4 rounded-xl bg-cyan-50 border border-cyan-200">
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Teacher Dashboard</h3>
+                        <div class="accent-box-bg p-4 rounded-xl border">
+                            <h3 class="text-xl font-bold accent-text-color mb-2">Teacher Dashboard</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
                                 <li>Real-time, graphical summary of feedback trends (e.g., Radar Chart).</li>
                                 <li>No direct access to raw, identifiable student comments.</li>
                                 <li>Mechanism to request clarification via STUCO intermediary.</li>
                             </ul>
                         </div>
-                        <div class="p-4 rounded-xl bg-cyan-50 border border-cyan-200">
-                            <h3 class="text-xl font-bold text-teal-700 mb-2">Administrative & Security</h3>
+                        <div class="accent-box-bg p-4 rounded-xl border">
+                            <h3 class="text-xl font-bold accent-text-color mb-2">Administrative & Security</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
                                 <li>Secure Microsoft Azure integration (Client ID/Secret required).</li>
                                 <li>Automated safeguarding triggers for high-risk reports.</li>
@@ -262,9 +271,10 @@
                     <div class="timeline-container max-w-xl mx-auto py-8">
                         <!-- Timeline Item 1 -->
                         <div class="timeline-item my-8">
+                            <!-- Keeping a green dot for 'Launch' to signify GO -->
                             <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold text-cyan-700">Week 1-2: Phase 1 Launch</h3>
+                                <h3 class="text-xl font-semibold accent-text-color">Week 1-2: Phase 1 Launch</h3>
                                 <p class="text-sm text-gray-600">Tool: MS Forms Pilot (Y6-Y8)</p>
                                 <p class="text-gray-700 mt-2">Secure required teacher data and execute the first round of anonymous feedback collection.</p>
                             </div>
@@ -272,10 +282,10 @@
 
                         <!-- Timeline Item 2 -->
                         <div class="timeline-item my-8">
-                            <!-- Dot uses default style, which is now #2dd4bf (Teal/Cyan) -->
+                            <!-- Dot uses default (Medium Blue) -->
                             <div class="timeline-dot top-0 -mt-2"></div> 
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold text-cyan-700">Week 3-6: Technical Setup</h3>
+                                <h3 class="text-xl font-semibold accent-text-color">Week 3-6: Technical Setup</h3>
                                 <p class="text-sm text-gray-600">Tool: Azure Integration</p>
                                 <p class="text-gray-700 mt-2">Acquire Client ID/Secret from IT and configure SSO for the custom web portal development.</p>
                             </div>
@@ -285,7 +295,7 @@
                         <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold text-cyan-700">Week 7-10: Backend Development</h3>
+                                <h3 class="text-xl font-semibold accent-text-color">Week 7-10: Backend Development</h3>
                                 <p class="text-sm text-gray-600">Focus: Data Processing & Moderation</p>
                                 <p class="text-gray-700 mt-2">Build the secure database, text screening logic, and the STUCO moderation interface.</p>
                             </div>
@@ -293,9 +303,10 @@
 
                         <!-- Timeline Item 4 -->
                         <div class="timeline-item my-8">
+                            <!-- Keeping a yellow dot for 'QA' to signify caution/testing -->
                             <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold text-cyan-700">Week 11-12: Teacher Dashboard & QA</h3>
+                                <h3 class="text-xl font-semibold accent-text-color">Week 11-12: Teacher Dashboard & QA</h3>
                                 <p class="text-sm text-gray-600">Focus: Frontend & Testing</p>
                                 <p class="text-gray-700 mt-2">Design and implement the Teacher Dashboard (including visualization), followed by rigorous security and usability testing.</p>
                             </div>
@@ -303,9 +314,10 @@
 
                         <!-- Timeline Item 5 -->
                         <div class="timeline-item my-8">
+                            <!-- Keeping a red dot for 'Full Launch' to signify finality -->
                             <div class="timeline-dot top-0 -mt-2 bg-red-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold text-cyan-700">End of Term: Full Launch</h3>
+                                <h3 class="text-xl font-semibold accent-text-color">End of Term: Full Launch</h3>
                                 <p class="text-sm text-gray-600">Goal: Go-Live</p>
                                 <p class="text-gray-700 mt-2">Official school-wide launch of the STUCO Feedback Portal with teacher training sessions.</p>
                             </div>
@@ -412,8 +424,8 @@
             const labels = ['Clarity of Instruction', 'Classroom Engagement', 'Student Support Access', 'Fairness & Consistency', 'Subject Knowledge'];
             const dataScores = [4.7, 3.2, 3.8, 4.5, 4.9];
             
-            // Define the new teal/cyan accent color
-            const accentColor = '#2dd4bf';
+            // Define the medium blue accent color
+            const accentColor = '#3b82f6';
 
             radarChart = new Chart(ctx, {
                 type: 'radar',
@@ -422,8 +434,8 @@
                     datasets: [{
                         label: 'Average Score (Scale 1-5)',
                         data: dataScores,
-                        // Chart colors use the new teal accent
-                        backgroundColor: 'rgba(45, 212, 191, 0.2)', 
+                        // Chart colors use the blue accent
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)', 
                         borderColor: accentColor, 
                         pointBackgroundColor: accentColor,
                         pointBorderColor: '#fff',
