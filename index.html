@@ -10,12 +10,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <!-- Custom Styles for Tahoe-inspired Blue Theme -->
+    <!-- Custom Styles for Tahoe-inspired Blue Theme (Light) -->
     <style>
         /* Base Light Theme and Font */
         body {
             font-family: 'Inter', sans-serif;
-            /* UPDATED: Darker Tahoe-inspired Gradient: Light Blue-200 to Light Blue-50 */
+            /* REVERTED: Light Tahoe-inspired Gradient: Light Blue-200 to Light Blue-50 */
             background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); 
             color: #1f2937; /* Dark text for contrast */
         }
@@ -27,28 +27,29 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
         }
 
-        /* Gradient Text for Header: Applied to the entire title */
+        /* Gradient Text for Header */
         .gradient-text {
-            /* Consistent Gradient: Light Blue -> Medium Blue -> Deep Indigo */
-            background-image: linear-gradient(to right, #60a5fa, #3b82f6, #1d4ed8); 
+            /* Deeper Blue Gradient for visibility on light background */
+            background-image: linear-gradient(to right, #2563eb, #1e40af);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
         }
 
-        /* UNUSED: Removed .stuco-blue-dark since STUCO is now part of the gradient */
-
         /* Active Tab Styling */
         .tab-button {
-             color: #6b7280; /* Default text color in light mode */
+             color: #4b5563; /* Dark Gray for inactive */
         }
         .tab-button.active {
             border-bottom-width: 3px;
-            /* Medium Blue for the active indicator */
-            border-color: #3b82f6; 
-            color: #1f2937; 
+            border-color: #3b82f6; /* Medium Blue active bar */
+            color: #1f2937; /* Very Dark Gray active text */
             font-weight: 600;
+        }
+        /* Hover color change for light background */
+        .tab-button:hover:not(.active) {
+            color: #2563eb; /* Blue-600 on hover */
         }
 
         /* --- Timeline Styling --- */
@@ -56,7 +57,7 @@
             position: relative;
             padding-left: 2rem; 
         }
-        /* Vertical Line */
+        /* Vertical Line - Remains Light Gray */
         .timeline-container:before {
             content: '';
             position: absolute;
@@ -109,25 +110,26 @@
     <div class="min-h-screen pb-12">
 
         <!-- Header - Scroll Effect applied -->
-        <header id="main-header" class="py-8 text-center border-b border-gray-200 transition-all duration-100 ease-out">
+        <header id="main-header" class="py-8 text-center transition-all duration-100 ease-out">
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                <!-- UPDATED: All words inside the gradient-text span for continuous effect -->
+                <!-- All words inside the gradient-text span for continuous effect -->
                 <span class="gradient-text">STUCO Feedback Portal Dashboard</span>
             </h1>
-            <!-- Updated Subtitle -->
+            <!-- Text color is dark grey, suitable for the light background -->
             <p class="mt-2 text-lg text-gray-600">Comprehensive Project Outline & Proposal</p>
         </header>
 
         <!-- Sticky Navigation -->
-        <nav id="nav-tabs" class="sticky top-0 z-10 bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-200">
+        <nav id="nav-tabs" class="sticky top-0 z-10 bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-300">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex space-x-1 sm:space-x-4">
-                    <button class="tab-button active flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-900" data-target="summary">Executive Summary</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-900" data-target="phase1">Phase 1: Immediate Pilot</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-900" data-target="phase2">Phase 2: Core Features</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-900" data-target="timeline">Development Timeline</button>
-                    <!-- Updated Tab Name -->
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-900" data-target="dashboard-mock">Teacher Interface Mockup</button>
+                    <button class="tab-button active flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="summary">Executive Summary</button>
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="phase1">Phase 1: Immediate Pilot</button>
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="phase2">Phase 2: Core Features</button>
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="timeline">Development Timeline</button>
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="dashboard-mock">Teacher Interface Mockup</button>
+                    <!-- NEW TAB: AI Premium Proposal -->
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="ai-proposal">AI Premium Funding Request</button>
                 </div>
             </div>
         </nav>
@@ -138,17 +140,17 @@
             <!-- 1. Executive Summary (Now includes the Chart) -->
             <section id="summary" class="tab-content">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">Executive Summary: Project Rationale</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Executive Summary: Project Rationale</h2>
+                    <p class="leading-relaxed mb-6 text-gray-700">
                         The STUCO Feedback Portal addresses the need for a safe, confidential, and actionable channel for student-teacher communication. It aims to formalize the feedback loop, moving beyond anecdotal comments to provide constructive, summarized data for continuous improvement.
                     </p>
-                    <ul class="space-y-4 text-gray-700 list-disc list-inside ml-4">
-                        <li class="font-semibold text-gray-900">Core Goal: Balance Anonymity and Accountability</li>
+                    <ul class="space-y-4 list-disc list-inside ml-4 text-gray-700">
+                        <li class="font-semibold text-gray-800">Core Goal: Balance Anonymity and Accountability</li>
                         <ul class="list-disc list-inside ml-6 text-gray-600">
                             <li>Students provide feedback anonymously, but inappropriate content is flagged and traced by STUCO moderation.</li>
                             <li>The system summarizes qualitative feedback into positive, actionable themes for teachers.</li>
                         </ul>
-                        <li class="font-semibold text-gray-900 mt-4">Expected Impact</li>
+                        <li class="font-semibold text-gray-800 mt-4">Expected Impact</li>
                         <ul class="list-disc list-inside ml-6 text-gray-600">
                             <li>Increase in quality and volume of student input.</li>
                             <li>Empower teachers with data-driven insights on classroom effectiveness.</li>
@@ -157,8 +159,8 @@
                     </ul>
                     
                     <!-- CHART AREA MOVED HERE: Anticipated Impact Visualization -->
-                    <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-6 border-b border-gray-200 pb-3">Anticipated Impact Visualization</h3>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <h3 class="text-2xl font-bold mt-10 mb-6 border-b border-gray-200 pb-3">Anticipated Impact Visualization</h3>
+                    <p class="leading-relaxed mb-6 text-gray-700">
                         This mock Radar Chart illustrates the type of performance insights the custom portal will deliver, turning raw feedback into quantifiable, actionable data points for teachers.
                     </p>
                     <div class="chart-container">
@@ -171,8 +173,8 @@
             <!-- 2. Phase 1: Immediate Pilot -->
             <section id="phase1" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">Phase 1: Immediate Pilot (Microsoft Forms)</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Phase 1: Immediate Pilot (Microsoft Forms)</h2>
+                    <p class="leading-relaxed mb-6 text-gray-700">
                         An immediate, low-resource deployment targeting Years 6-8 to test the concept and gather initial data.
                     </p>
 
@@ -181,9 +183,9 @@
                         <div class="accent-box-bg p-4 rounded-lg border">
                             <h3 class="text-xl font-semibold accent-text-color mb-2">Scope & Tools</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
-                                <li><span class="font-bold">Tool:</span> Microsoft Forms (Existing School License).</li>
-                                <li><span class="font-bold">Target Audience:</span> Students in Years 6, 7, and 8.</li>
-                                <li><span class="font-bold">Data Collection:</span> Focused on core teaching suggestions only.</li>
+                                <li><strong class="font-semibold">Tool:</strong> Microsoft Forms (Existing School License).</li>
+                                <li><strong class="font-semibold">Target Audience:</strong> Students in Years 6, 7, and 8.</li>
+                                <li><strong class="font-semibold">Data Collection:</strong> Focused on core teaching suggestions only.</li>
                             </ul>
                         </div>
                         <div class="accent-box-bg p-4 rounded-lg border">
@@ -228,8 +230,8 @@
             <!-- 3. Phase 2: Core Features -->
             <section id="phase2" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">Phase 2: Custom Web Portal (Full Features)</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Phase 2: Custom Web Portal (Full Features)</h2>
+                    <p class="leading-relaxed mb-6 text-gray-700">
                         Implementation of the full-featured, secure web application, offering advanced functionality for teachers, students, and administration.
                     </p>
 
@@ -266,7 +268,7 @@
             <!-- 4. Development Timeline -->
             <section id="timeline" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">Development Timeline</h2>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Development Timeline</h2>
 
                     <div class="timeline-container max-w-xl mx-auto py-8">
                         <!-- Timeline Item 1 -->
@@ -329,8 +331,8 @@
             <!-- 5. Teacher Interface Mockup (Now includes AI Summary) -->
             <section id="dashboard-mock" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">Teacher Dashboard: AI Feedback Summary</h2>
-                    <p class="text-gray-700 leading-relaxed mb-6">
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Teacher Dashboard: AI Feedback Summary</h2>
+                    <p class="leading-relaxed mb-6 text-gray-700">
                         The core feature for teachers: a positive, moderated summary of constructive feedback generated by the system's analysis, focusing on key strengths and growth opportunities.
                     </p>
 
@@ -345,9 +347,9 @@
                                 Key Strengths (17 Positive Reports)
                             </h3>
                             <ul class="list-disc list-inside ml-4 text-gray-800 space-y-2">
-                                <li><strong>Clarity of Explanations:</strong> Students frequently highlight how your use of real-world examples and visual aids makes complex topics easy to grasp.</li>
-                                <li><strong>Supportive Environment:</strong> The vast majority of feedback praises the welcoming and non-judgemental atmosphere you cultivate, encouraging questions.</li>
-                                <li><strong>Fairness:</strong> No negative reports regarding fairness; consistent positive remarks on assignment grading and classroom management rules.</li>
+                                <li><strong class="font-semibold">Clarity of Explanations:</strong> Students frequently highlight how your use of real-world examples and visual aids makes complex topics easy to grasp.</li>
+                                <li><strong class="font-semibold">Supportive Environment:</strong> The vast majority of feedback praises the welcoming and non-judgemental atmosphere you cultivate, encouraging questions.</li>
+                                <li><strong class="font-semibold">Fairness:</strong> No negative reports regarding fairness; consistent positive remarks on assignment grading and classroom management rules.</li>
                             </ul>
                         </div>
 
@@ -360,14 +362,51 @@
                                 Growth Opportunities (5 Actionable Suggestions)
                             </h3>
                             <ul class="list-disc list-inside ml-4 text-gray-800 space-y-2">
-                                <li><strong>Pacing of Lessons:</strong> Several students suggested slowing down the introduction of new concepts, particularly on Fridays.</li>
-                                <li><strong>Resource Availability:</strong> There were requests for digital copies of worksheets or notes to be uploaded to the school portal before the lesson.</li>
-                                <li><strong>Group Work:</strong> Feedback suggested more variety in grouping strategies to avoid working with the same peers every time.</li>
+                                <li><strong class="font-semibold">Pacing of Lessons:</strong> Several students suggested slowing down the introduction of new concepts, particularly on Fridays.</li>
+                                <li><strong class="font-semibold">Resource Availability:</strong> There were requests for digital copies of worksheets or notes to be uploaded to the school portal before the lesson.</li>
+                                <li><strong class="font-semibold">Group Work:</strong> Feedback suggested more variety in grouping strategies to avoid working with the same peers every time.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
+            
+            <!-- 6. NEW SECTION: AI Premium Funding Request -->
+            <section id="ai-proposal" class="tab-content hidden">
+                <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Funding Proposal: Google AI Premium Access</h2>
+                    <p class="leading-relaxed mb-6 text-gray-700">
+                        To significantly accelerate the development of the <strong class="font-semibold">STUCO Feedback Portal</strong> and enhance overall STUCO productivity, we are requesting a small monthly budget for <strong class="font-semibold">Gemini 2.5 Pro via Google AI Premium</strong>.
+                    </p>
+
+                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner text-gray-700">
+                        <h3 class="text-2xl font-semibold accent-text-color mb-3">Investment & Benefits</h3>
+                        <p class="text-lg font-bold mb-4">Requested Cost: <span class="text-green-600">$19.99 per month</span></p>
+
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
+                                    <span class="text-blue-500 mr-2 text-xl">🚀</span> Enhanced Development in Canvas
+                                </h4>
+                                <p class="text-gray-700 ml-4">Access to the powerful <strong class="font-semibold">Gemini 2.5 Pro</strong> model directly within the development environment provides superior code generation, debugging, and complex problem-solving assistance, which is critical for Phase 2's custom web application build.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
+                                    <span class="text-blue-500 mr-2 text-xl">💻</span> Integrated STUCO Workflow
+                                </h4>
+                                <p class="text-gray-700 ml-4">The subscription grants built-in Gemini access across the Google Chrome browser and Google Workspace, streamlining routine STUCO tasks such as drafting official correspondence, summarizing meeting notes, and structuring proposals.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mt-8 mb-4 border-b border-gray-200 pb-3">Action Items for Board Consideration</h3>
+                    <ol class="list-decimal list-inside ml-4 space-y-3 text-gray-700">
+                        <li><strong class="font-semibold">STUCO Google Account:</strong> We need to confirm if the Student Council currently has an official, dedicated Google Account that can host this subscription and be accessed by key team members.</li>
+                        <li><strong class="font-semibold">Account Creation:</strong> If an official account does not exist, we request permission and support to create one to ensure the subscription is officially managed under STUCO's oversight.</li>
+                    </ol>
+                </div>
+            </section>
+            <!-- END NEW SECTION -->
 
         </main>
     </div>
