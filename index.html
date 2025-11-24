@@ -15,7 +15,6 @@
         /* Base Light Theme and Font */
         body {
             font-family: 'Inter', sans-serif;
-            /* REVERTED: Light Tahoe-inspired Gradient: Light Blue-200 to Light Blue-50 */
             background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); 
             color: #1f2937; /* Dark text for contrast */
         }
@@ -23,19 +22,26 @@
         .card {
             background-color: white; /* Clean white card */
             border-color: #cbd5e1; /* Slightly more visible border */
-            /* Soft shadow for depth */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
         }
 
-        /* Gradient Text for Header */
+        /* --- NEW: Animated Gradient Text --- */
+        @keyframes animated-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .gradient-text {
-            /* Deeper Blue Gradient for visibility on light background */
-            background-image: linear-gradient(to right, #2563eb, #1e40af);
+            /* Gradient: Light Blue -> Medium Blue -> Deep Indigo */
+            background-image: linear-gradient(to right, #60a5fa, #3b82f6, #1d4ed8, #3b82f6, #60a5fa); 
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
+            background-size: 200% auto; /* Size for animation */
+            animation: animated-gradient 5s ease-in-out infinite; /* 5-second cycle */
         }
+        /* --- End Animated Gradient --- */
 
         /* Active Tab Styling */
         .tab-button {
@@ -47,7 +53,6 @@
             color: #1f2937; /* Very Dark Gray active text */
             font-weight: 600;
         }
-        /* Hover color change for light background */
         .tab-button:hover:not(.active) {
             color: #2563eb; /* Blue-600 on hover */
         }
@@ -57,7 +62,6 @@
             position: relative;
             padding-left: 2rem; 
         }
-        /* Vertical Line - Remains Light Gray */
         .timeline-container:before {
             content: '';
             position: absolute;
@@ -67,7 +71,6 @@
             background-color: #e5e7eb; 
             height: 100%;
         }
-        /* Dot position */
         .timeline-dot {
             position: absolute;
             left: 1rem; 
@@ -75,7 +78,6 @@
             width: 1rem;
             height: 1rem;
             border-radius: 50%;
-            /* Default Dot Color (Medium Blue) */
             background-color: #3b82f6; 
             z-index: 10;
         }
@@ -112,10 +114,9 @@
         <!-- Header - Scroll Effect applied -->
         <header id="main-header" class="py-8 text-center transition-all duration-100 ease-out">
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-900">
-                <!-- All words inside the gradient-text span for continuous effect -->
+                <!-- All words inside the animated gradient-text span -->
                 <span class="gradient-text">STUCO Feedback Portal Dashboard</span>
             </h1>
-            <!-- Text color is dark grey, suitable for the light background -->
             <p class="mt-2 text-lg text-gray-600">Comprehensive Project Outline & Proposal</p>
         </header>
 
@@ -124,12 +125,13 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex space-x-1 sm:space-x-4">
                     <button class="tab-button active flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="summary">Executive Summary</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="phase1">Phase 1: Immediate Pilot</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="phase2">Phase 2: Core Features</button>
+                    <!-- REMOVED Phase 1 Button -->
+                    <!-- RENAMED Phase 2 to Core Features -->
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="core-features">Core Features</button>
                     <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="timeline">Development Timeline</button>
                     <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="dashboard-mock">Teacher Interface Mockup</button>
-                    <!-- NEW TAB: AI Premium Proposal -->
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="ai-proposal">AI Premium Funding Request</button>
+                    <!-- REPLACED AI Proposal with new Requests Tab -->
+                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="admin-requests">Administrative Requests</button>
                 </div>
             </div>
         </nav>
@@ -170,69 +172,14 @@
                 </div>
             </section>
 
-            <!-- 2. Phase 1: Immediate Pilot -->
-            <section id="phase1" class="tab-content hidden">
+            <!-- 2. REMOVED Phase 1 Section -->
+
+            <!-- 3. Core Features (Was Phase 2) -->
+            <section id="core-features" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Phase 1: Immediate Pilot (Microsoft Forms)</h2>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Custom Web Portal: Core Features</h2>
                     <p class="leading-relaxed mb-6 text-gray-700">
-                        An immediate, low-resource deployment targeting Years 6-8 to test the concept and gather initial data.
-                    </p>
-
-                    <!-- Applied new blue accent classes -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="accent-box-bg p-4 rounded-lg border">
-                            <h3 class="text-xl font-semibold accent-text-color mb-2">Scope & Tools</h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
-                                <li><strong class="font-semibold">Tool:</strong> Microsoft Forms (Existing School License).</li>
-                                <li><strong class="font-semibold">Target Audience:</strong> Students in Years 6, 7, and 8.</li>
-                                <li><strong class="font-semibold">Data Collection:</strong> Focused on core teaching suggestions only.</li>
-                            </ul>
-                        </div>
-                        <div class="accent-box-bg p-4 rounded-lg border">
-                            <h3 class="text-xl font-semibold accent-text-color mb-2">Action Plan</h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
-                                <li>STUCO creates form with branching logic for teacher selection.</li>
-                                <li>Launch next week via tutor group announcements.</li>
-                                <li>STUCO manually monitors and anonymizes data before summary delivery.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Initial Requirements</h3>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden">
-                                <thead class="bg-gray-100">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700">Stakeholder</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700">Required Action</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200 text-gray-700">
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap">School Admin</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">Provide list of Y6-Y8 teachers.</td>
-                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span></td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-6 py-4 whitespace-nowrap">STUCO Team</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">Develop and test Form logic.</td>
-                                        <td class="px-6 py-4 whitespace-nowrap"><span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Ready</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. Phase 2: Core Features -->
-            <section id="phase2" class="tab-content hidden">
-                <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Phase 2: Custom Web Portal (Full Features)</h2>
-                    <p class="leading-relaxed mb-6 text-gray-700">
-                        Implementation of the full-featured, secure web application, offering advanced functionality for teachers, students, and administration.
+                        The project is a full-featured, secure web application, offering advanced functionality for teachers, students, and administration. The core code for these features is approximately 70% complete.
                     </p>
 
                     <!-- Applied new blue accent classes -->
@@ -248,7 +195,7 @@
                         <div class="accent-box-bg p-4 rounded-xl border">
                             <h3 class="text-xl font-bold accent-text-color mb-2">Teacher Dashboard</h3>
                             <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
-                                <li>Real-time, graphical summary of feedback trends (e.g., Radar Chart).</li>
+                                <li>Real-time, AI-generated summary of feedback trends.</li>
                                 <li>No direct access to raw, identifiable student comments.</li>
                                 <li>Mechanism to request clarification via STUCO intermediary.</li>
                             </ul>
@@ -265,63 +212,76 @@
                 </div>
             </section>
 
-            <!-- 4. Development Timeline -->
+            <!-- 4. Development Timeline (REBUILT) -->
             <section id="timeline" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Development Timeline</h2>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Development Timeline & Status</h2>
+                    <p class="leading-relaxed mb-6 text-gray-700">
+                        Core development is largely complete. The project is now entering the final integration and deployment phase, which depends on key administrative and IT support.
+                    </p>
 
+                    <!-- Completed Milestones -->
+                    <h3 class="text-2xl font-bold text-green-600 mb-4">Completed Milestones (Code Complete)</h3>
                     <div class="timeline-container max-w-xl mx-auto py-8">
-                        <!-- Timeline Item 1 -->
                         <div class="timeline-item my-8">
-                            <!-- Keeping a green dot for 'Launch' to signify GO -->
                             <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold accent-text-color">Week 1-2: Phase 1 Launch</h3>
-                                <p class="text-sm text-gray-600">Tool: MS Forms Pilot (Y6-Y8)</p>
-                                <p class="text-gray-700 mt-2">Secure required teacher data and execute the first round of anonymous feedback collection.</p>
+                                <h3 class="text-xl font-semibold accent-text-color">Core API & Database</h3>
+                                <p class="text-sm text-gray-600">File: `app.py`</p>
+                                <p class="text-gray-700 mt-2">Backend logic, database schema (SQLAlchemy), and all API endpoints for feedback, admin, and teachers are built and tested.</p>
                             </div>
                         </div>
-
-                        <!-- Timeline Item 2 -->
                         <div class="timeline-item my-8">
-                            <!-- Dot uses default (Medium Blue) -->
-                            <div class="timeline-dot top-0 -mt-2"></div> 
+                            <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold accent-text-color">Week 3-6: Technical Setup</h3>
-                                <p class="text-sm text-gray-600">Tool: Azure Integration</p>
-                                <p class="text-gray-700 mt-2">Acquire Client ID/Secret from IT and configure SSO for the custom web portal development.</p>
+                                <h3 class="text-xl font-semibold accent-text-color">Student Frontend</h3>
+                                <p class="text-sm text-gray-600">File: `stu_frontend.html`</p>
+                                <p class="text-gray-700 mt-2">Full-featured student submission portal with category selection, dynamic teacher fields, and anonymity controls is complete.</p>
                             </div>
                         </div>
-
-                        <!-- Timeline Item 3 -->
                         <div class="timeline-item my-8">
-                            <div class="timeline-dot top-0 -mt-2"></div>
+                            <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold accent-text-color">Week 7-10: Backend Development</h3>
-                                <p class="text-sm text-gray-600">Focus: Data Processing & Moderation</p>
-                                <p class="text-gray-700 mt-2">Build the secure database, text screening logic, and the STUCO moderation interface.</p>
+                                <h3 class="text-xl font-semibold accent-text-color">Teacher Dashboard</h3>
+                                <p class="text-sm text-gray-600">File: `teach_frontend.html`</p>
+                                <p class="text-gray-700 mt-2">Interface for teachers to view AI summaries, see trends, and request clarification is built and functional.</p>
                             </div>
                         </div>
-
-                        <!-- Timeline Item 4 -->
                         <div class="timeline-item my-8">
-                            <!-- Keeping a yellow dot for 'QA' to signify caution/testing -->
+                            <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
+                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                                <h3 class="text-xl font-semibold accent-text-color">Admin Moderation Portal</h3>
+                                <p class="text-sm text-gray-600">File: `stuco_admin_dashboard.html`</p>
+                                <p class="text-gray-700 mt-2">STUCO dashboard for moderating, approving, retracting, and deleting feedback is complete.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pending Steps -->
+                    <h3 class="text-2xl font-bold text-red-600 mb-4 mt-10">Pending Deployment Steps</h3>
+                     <div class="timeline-container max-w-xl mx-auto py-8">
+                        <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold accent-text-color">Week 11-12: Teacher Dashboard & QA</h3>
-                                <p class="text-sm text-gray-600">Focus: Frontend & Testing</p>
-                                <p class="text-gray-700 mt-2">Design and implement the Teacher Dashboard (including visualization), followed by rigorous security and usability testing.</p>
+                                <h3 class="text-xl font-semibold accent-text-color">Azure SSO Integration</h3>
+                                <p class="text-sm text-gray-600">Status: <strong class="text-red-600">Blocked</strong> - Awaiting IT Admin</p>
+                                <p class="text-gray-700 mt-2">Need IT to register the app in Azure to get the Client ID & Secret for Microsoft login.</p>
                             </div>
                         </div>
-
-                        <!-- Timeline Item 5 -->
-                        <div class="timeline-item my-8">
-                            <!-- Keeping a red dot for 'Full Launch' to signify finality -->
-                            <div class="timeline-dot top-0 -mt-2 bg-red-500"></div>
+                         <div class="timeline-item my-8">
+                            <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
                             <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
-                                <h3 class="text-xl font-semibold accent-text-color">End of Term: Full Launch</h3>
-                                <p class="text-sm text-gray-600">Goal: Go-Live</p>
-                                <p class="text-gray-700 mt-2">Official school-wide launch of the STUCO Feedback Portal with teacher training sessions.</p>
+                                <h3 class="text-xl font-semibold accent-text-color">Teacher List Integration</h3>
+                                <p class="text-sm text-gray-600">Status: <strong class="text-red-600">Blocked</strong> - Awaiting School Admin</p>
+                                <p class="text-gray-700 mt-2">Need the complete list of all teachers and their year-level allocations to populate the database.</p>
+                            </div>
+                        </div>
+                         <div class="timeline-item my-8">
+                            <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
+                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                                <h3 class="text-xl font-semibold accent-text-color">School Server Setup</h3>
+                                <p class="text-sm text-gray-600">Status: <strong class="text-red-600">Blocked</strong> - Awaiting IT Admin</p>
+                                <p class="text-gray-700 mt-2">Need a dedicated server/host environment from the school to deploy the Python API (`app.py`) and database.</p>
                             </div>
                         </div>
                     </div>
@@ -333,7 +293,7 @@
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
                     <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Teacher Dashboard: AI Feedback Summary</h2>
                     <p class="leading-relaxed mb-6 text-gray-700">
-                        The core feature for teachers: a positive, moderated summary of constructive feedback generated by the system's analysis, focusing on key strengths and growth opportunities.
+                        This is a mockup of the final AI-powered summary interface. The core feature for teachers is a positive, moderated summary of constructive feedback, focusing on key strengths and growth opportunities.
                     </p>
 
                     <!-- Mock AI Summary Cards -->
@@ -371,64 +331,66 @@
                 </div>
             </section>
             
-            <!-- 6. NEW SECTION: AI Premium Funding Request -->
-            <section id="ai-proposal" class="tab-content hidden">
+            <!-- 6. NEW SECTION: Administrative Requests (Replaces AI Funding) -->
+            <section id="admin-requests" class="tab-content hidden">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Funding Proposal: Dual AI Access for Portal Functionality & STUCO Productivity</h2>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Administrative Requests</h2>
                     <p class="leading-relaxed mb-6 text-gray-700">
-                        To build a highly efficient and safe feedback processing system, we require access to two distinct AI models. This dual-model approach (High-Power Summarization + Low-Cost Filtering) ensures maximum efficiency and minimal operational costs.
+                       With core development complete, the project's launch is now dependent on the following key administrative and IT resources.
                     </p>
 
-                    <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">1. Gemini 2.5 Pro (Subscription)</h3>
+                    <!-- Technical & Data Requests -->
+                    <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">1. Technical & Data Dependencies (Blocked)</h3>
                     <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner text-gray-700 mb-6">
-                        <p class="text-lg font-bold mb-4">Estimated Monthly Cost: <span class="text-green-600">$19.99</span></p>
-
                         <div class="space-y-4">
                             <div>
                                 <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-blue-500 mr-2 text-xl">🚀</span> Complex Summarization & Refinement
+                                    <span class="text-red-500 mr-2 text-xl">🛡️</span> Dedicated Server Access
                                 </h4>
-                                <p class="text-gray-700 ml-4">Access to the powerful <strong class="font-semibold">Gemini 2.5 Pro</strong> is essential for <strong class="font-semibold">Phase 2</strong> to take raw, screened feedback and generate the neutral, positive, and actionable teacher summaries (as seen in the Dashboard Mockup).</p>
+                                <p class="text-gray-700 ml-4">We require allocation of a permanent, secure school server (or equivalent virtual host/IP address) to deploy the Python API (`app.py`) and host the production database.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-blue-500 mr-2 text-xl">💻</span> STUCO Productivity Integration
+                                    <span class="text-red-500 mr-2 text-xl">🔑</span> Microsoft Azure (SSO) Integration
                                 </h4>
-                                <p class="text-gray-700 ml-4">The subscription also grants built-in Gemini access for routine STUCO tasks such as drafting official correspondence, summarizing meeting notes, and structuring proposals, enhancing overall team efficiency.</p>
+                                <p class="text-gray-700 ml-4">We require IT to register the application in the school's Azure portal to provide the <strong class="font-semibold">Client ID</strong> and <strong class="font-semibold">Client Secret</strong> needed for Microsoft login.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
+                                    <span class="text-red-500 mr-2 text-xl">📋</span> Complete Teacher List
+                                </h4>
+                                <p class="text-gray-700 ml-4">We need a <strong class="font-semibold">full list of every teacher's name and email</strong>, plus their year-level allocations, to populate the database and enable correct feedback routing.</p>
                             </div>
                         </div>
                     </div>
                     
-                    <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">2. DeepSeek API (Pay-Per-Use)</h3>
+                    <!-- AI Funding Request -->
+                    <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">2. AI Funding Request (Monthly)</h3>
                     <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner text-gray-700 mb-6">
-                        <p class="text-lg font-bold mb-4">Estimated Monthly Cost: <span class="text-green-600">$1.50</span></p>
+                        <p class="text-lg font-bold mb-4">Total Estimated Cost: <span class="text-red-600 font-extrabold">$21.49 / month</span></p>
 
                         <div class="space-y-4">
                             <div>
                                 <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-blue-500 mr-2 text-xl">🛡️</span> Cost-Effective Filtering & Screening
+                                    <span class="text-blue-500 mr-2 text-xl">🚀</span> Gemini 3 Pro Subscription ($19.99/mo)
                                 </h4>
-                                <p class="text-gray-700 ml-4">The DeepSeek API is proposed for lightweight, high-volume tasks such as initial <span class="font-bold">sentiment analysis</span> and <span class="font-bold">toxicity scoring</span> of every incoming feedback comment. Using a low-cost API for this pre-filtering step saves significant operational costs by limiting the use of the more expensive Gemini Pro model.</p>
+                                <p class="text-gray-700 ml-4">Access to <strong class="font-semibold">Gemini 3 Pro</strong>, an incredibly powerful new model that excels at coding and complex reasoning, is essential for generating the high-quality, nuanced teacher summaries.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
+                                    <span class="text-blue-500 mr-2 text-xl">🛡️</span> DeepSeek API Usage ($1.50/mo)
+                                </h4>
+                                <p class="text-gray-700 ml-4">Used for low-cost, high-volume <span class="font-bold">sentiment analysis</span> and <span class="font-bold">toxicity scoring</span> of every comment *before* it's sent to Gemini, saving significant operational costs.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- New Total Summary Block -->
-                    <div class="p-6 rounded-xl bg-gray-100 border border-gray-300 shadow-md mt-8">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3">Total Estimated AI Investment</h3>
-                        <p class="text-xl text-gray-700">
-                            The comprehensive AI plan is <strong class="text-red-600 font-extrabold">$21.49 per month</strong> ($19.99 for Gemini Pro Subscription + $1.50 for DeepSeek API).
-                        </p>
-                        <p class="mt-2 text-sm text-gray-600">This budget covers both the high-power summarization engine and the required low-cost security filtering layer.</p>
-                    </div>
-
-
                     <h3 class="text-2xl font-bold mt-8 mb-4 border-b border-gray-200 pb-3">Action Items for Board Consideration</h3>
                     <ol class="list-decimal list-inside ml-4 space-y-3 text-gray-700">
-                        <!-- ASTERISK REMOVED AND REPLACED WITH FONT-MONO/TEXT-BLUE-700 FOR CLARITY -->
-                        <li><strong class="font-semibold">Centralized Billing for Gemini Pro:</strong> We require administrative guidance on establishing centralized procurement and billing for the $19.99/month Gemini 2.5 Pro subscription, as a dedicated STUCO payment account is not feasible.</li>
-                        <li><strong class="font-semibold">Dedicated STUCO Management Account:</strong> We request permission and IT support to create a dedicated, shared school account (e.g., <span class="font-mono text-blue-700">stuco.portal@school.edu</span>) to serve as the administrative owner for the AI subscription and other portal services.</li>
-                        <li><strong class="font-semibold">API Key Management:</strong> We require administrative guidance on the secure acquisition and storage of the API key for the DeepSeek service.</li>
+                        <li><strong class="font-semibold">Approve funding</strong> for the dual-AI model budget (<strong class="font-semibold">$21.49/month</strong>).</li>
+                        <li><strong class="font-semibold">Direct IT</strong> to provide server access and Azure SSO credentials.</li>
+                        <li><strong class="font-semibold">Direct Admin</strong> to provide the complete all-staff teacher list.</li>
+                        <li><strong class="font-semibold">Provide guidance</strong> on centralized procurement for the AI services and secure API key management.</li>
                     </ol>
                 </div>
             </section>
