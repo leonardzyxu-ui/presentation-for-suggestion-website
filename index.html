@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
     <title>STUCO Feedback Portal Dashboard</title>
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -10,54 +10,85 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
-    <!-- Custom Styles for Tahoe-inspired Blue Theme (Light) -->
+    <!-- Custom Styles for Dark Blue "Hub" Theme -->
     <style>
-        /* Base Light Theme and Font */
+        /* Base Dark Theme and Font */
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); 
-            color: #1f2937; /* Dark text for contrast */
+            background-color: #0a0e27; 
+            color: #e5e7eb; /* Light text for contrast */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        /* Card Background */
+        /* Card Background (Now dark) */
         .card {
-            background-color: white; /* Clean white card */
-            border-color: #cbd5e1; /* Slightly more visible border */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+            background-color: #1a1f3a; /* stuco-surface color */
+            border-color: #3b82f6; /* Blue border */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
         }
 
-        /* --- NEW: Animated Gradient Text --- */
+        /* --- Animated Gradient Text (Kept from previous version) --- */
         @keyframes animated-gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         .gradient-text {
-            /* Gradient: Light Blue -> Medium Blue -> Deep Indigo */
             background-image: linear-gradient(to right, #60a5fa, #3b82f6, #1d4ed8, #3b82f6, #60a5fa); 
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-fill-color: transparent;
-            background-size: 200% auto; /* Size for animation */
-            animation: animated-gradient 5s ease-in-out infinite; /* 5-second cycle */
+            background-size: 200% auto; 
+            animation: animated-gradient 5s ease-in-out infinite; 
         }
         /* --- End Animated Gradient --- */
 
-        /* Active Tab Styling */
-        .tab-button {
-             color: #4b5563; /* Dark Gray for inactive */
-        }
-        .tab-button.active {
-            border-bottom-width: 3px;
-            border-color: #3b82f6; /* Medium Blue active bar */
-            color: #1f2937; /* Very Dark Gray active text */
+        /* --- Main Menu Button Styles (from stu_frontend.html) --- */
+        .capsule-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-size: 1rem;
             font-weight: 600;
+            color: white;
+            border-radius: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            transition: all 250ms ease-in-out;
+            transform-origin: center;
+            min-width: 280px;
+            width: 100%; /* Fill the grid column */
         }
-        .tab-button:hover:not(.active) {
-            color: #2563eb; /* Blue-600 on hover */
+        /* NEW: Blue Halo Effect */
+        .capsule-btn:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.8), 
+                        0 0 25px rgba(59, 130, 246, 0.4); /* Blue halo */
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        .capsule-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+        /* Gradient for all buttons */
+        .ai-gradient {
+            background-image: linear-gradient(to right, #ec4899, #8b5cf6); /* Pink to Purple */
+            background-size: 200% auto;
+            transition: background-position 0.4s ease-out;
+        }
+        .ai-gradient:hover {
+            background-position: right center;
         }
 
-        /* --- Timeline Styling --- */
+        /* --- Page Hiding --- */
+        .hidden-page {
+            display: none;
+        }
+
+        /* --- Timeline Styling (Text color updated) --- */
         .timeline-container {
             position: relative;
             padding-left: 2rem; 
@@ -68,7 +99,7 @@
             top: 0;
             left: 1rem; 
             width: 3px;
-            background-color: #e5e7eb; 
+            background-color: #374151; /* Darker line */
             height: 100%;
         }
         .timeline-dot {
@@ -86,23 +117,39 @@
             margin-bottom: 2rem;
             padding-left: 1rem; 
         }
-        /* --- End Timeline Fix --- */
-
-        /* Responsive Chart Container */
-        .chart-container {
-            position: relative;
-            max-width: 500px;
-            height: 400px;
-            margin: auto;
-        }
         
-        /* Consistent Accent Color for Phase 1/2 boxes */
+        /* Consistent Accent Color for Phase 1/2 boxes (Dark Mode) */
         .accent-box-bg {
-            background-color: #eff6ff; /* Lightest Blue-50 */
-            border-color: #bfdbfe; /* Light Blue-200 */
+            background-color: #1f2937; /* Darker blue */
+            border-color: #3b82f6; /* Blue border */
         }
         .accent-text-color {
-            color: #1e40af; /* Deep Blue-800, the "slightly-dark-blue" */
+            color: #93c5fd; /* Light blue text */
+        }
+
+        /* Back Button Style */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #60a5fa; /* Light Blue */
+            transition: color 0.2s;
+        }
+        .back-button:hover {
+            color: #93c5fd; /* Lighter Blue */
+        }
+        .back-button svg {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+        }
+        
+        /* Chart container for the new teacher mockup */
+        .trend-chart-container {
+            position: relative;
+            width: 100%;
+            height: 288px; /* 18rem */
         }
     </style>
 </head>
@@ -117,76 +164,102 @@
                 <!-- All words inside the animated gradient-text span -->
                 <span class="gradient-text">STUCO Feedback Portal Dashboard</span>
             </h1>
-            <p class="mt-2 text-lg text-gray-600">Comprehensive Project Outline & Proposal</p>
+            <!-- Text color updated to light gray -->
+            <p class="mt-2 text-lg text-gray-300">Comprehensive Project Outline & Proposal</p>
         </header>
 
-        <!-- Sticky Navigation -->
-        <nav id="nav-tabs" class="sticky top-0 z-10 bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-300">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex space-x-1 sm:space-x-4">
-                    <button class="tab-button active flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="summary">Executive Summary</button>
-                    <!-- REMOVED Phase 1 Button -->
-                    <!-- RENAMED Phase 2 to Core Features -->
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="core-features">Core Features</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="timeline">Development Timeline</button>
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="dashboard-mock">Teacher Interface Mockup</button>
-                    <!-- REPLACED AI Proposal with new Requests Tab -->
-                    <button class="tab-button flex-1 py-4 px-1 text-sm font-medium transition-colors hover:text-gray-700" data-target="admin-requests">Administrative Requests</button>
+        <!-- NEW: Main Menu (Hub) -->
+        <!-- UPDATED: max-w-3xl (smaller box), gap-3 (tighter rows) -->
+        <div id="main-menu" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-[#1a1f3a] p-10 sm:p-14 rounded-3xl shadow-2xl text-center">
+                <!-- REMOVED "Project Dashboard Navigation" text -->
+                
+                <!-- Button Grid -->
+                <!-- UPDATED: gap-3 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="flex justify-center">
+                        <button data-target="summary" class="capsule-btn text-white ai-gradient">
+                            Executive Summary
+                        </button>
+                    </div>
+                    <div class="flex justify-center">
+                        <button data-target="core-features" class="capsule-btn text-white ai-gradient">
+                            Core Features
+                        </button>
+                    </div>
+                    <div class="flex justify-center">
+                        <button data-target="timeline" class="capsule-btn text-white ai-gradient">
+                            Development Timeline
+                        </button>
+                    </div>
+                    <div class="flex justify-center">
+                        <button data-target="dashboard-mock" class="capsule-btn text-white ai-gradient">
+                            Teacher Interface Mockup
+                        </button>
+                    </div>
+                    <div class="md:col-span-2 flex justify-center">
+                        <button data-target="admin-requests" class="capsule-btn text-white ai-gradient">
+                            Administrative Requests
+                        </button>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
 
-        <!-- Content Sections -->
+        <!-- Content Sections (Now hidden by default) -->
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
 
             <!-- 1. Executive Summary (Now includes the Chart) -->
-            <section id="summary" class="tab-content">
+            <section id="summary" class="hidden-page">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Executive Summary: Project Rationale</h2>
-                    <p class="leading-relaxed mb-6 text-gray-700">
+                    <button class="back-button mb-6">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+                        Back to Menu
+                    </button>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3 text-white">Executive Summary: Project Rationale</h2>
+                    <p class="leading-relaxed mb-6 text-gray-300">
                         The STUCO Feedback Portal addresses the need for a safe, confidential, and actionable channel for student-teacher communication. It aims to formalize the feedback loop, moving beyond anecdotal comments to provide constructive, summarized data for continuous improvement.
                     </p>
-                    <ul class="space-y-4 list-disc list-inside ml-4 text-gray-700">
-                        <li class="font-semibold text-gray-800">Core Goal: Balance Anonymity and Accountability</li>
-                        <ul class="list-disc list-inside ml-6 text-gray-600">
+                    <ul class="space-y-4 list-disc list-inside ml-4 text-gray-300">
+                        <li class="font-semibold text-white">Core Goal: Balance Anonymity and Accountability</li>
+                        <ul class="list-disc list-inside ml-6 text-gray-400">
                             <li>Students provide feedback anonymously, but inappropriate content is flagged and traced by STUCO moderation.</li>
                             <li>The system summarizes qualitative feedback into positive, actionable themes for teachers.</li>
                         </ul>
-                        <li class="font-semibold text-gray-800 mt-4">Expected Impact</li>
-                        <ul class="list-disc list-inside ml-6 text-gray-600">
+                        <li class="font-semibold text-white mt-4">Expected Impact</li>
+                        <ul class="list-disc list-inside ml-6 text-gray-400">
                             <li>Increase in quality and volume of student input.</li>
                             <li>Empower teachers with data-driven insights on classroom effectiveness.</li>
                             <li>Foster a culture of open communication and trust.</li>
                         </ul>
                     </ul>
                     
-                    <!-- CHART AREA MOVED HERE: Anticipated Impact Visualization -->
-                    <h3 class="text-2xl font-bold mt-10 mb-6 border-b border-gray-200 pb-3">Anticipated Impact Visualization</h3>
-                    <p class="leading-relaxed mb-6 text-gray-700">
+                    <h3 class="text-2xl font-bold text-white mt-10 mb-6 border-b border-gray-700 pb-3">Anticipated Impact Visualization</h3>
+                    <p class="leading-relaxed mb-6 text-gray-300">
                         This mock Radar Chart illustrates the type of performance insights the custom portal will deliver, turning raw feedback into quantifiable, actionable data points for teachers.
                     </p>
                     <div class="chart-container">
-                        <!-- Canvas element for Chart.js -->
                         <canvas id="feedbackRadarChart"></canvas> 
                     </div>
                 </div>
             </section>
 
-            <!-- 2. REMOVED Phase 1 Section -->
-
-            <!-- 3. Core Features (Was Phase 2) -->
-            <section id="core-features" class="tab-content hidden">
+            <!-- 2. Core Features -->
+            <section id="core-features" class="hidden-page">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Custom Web Portal: Core Features</h2>
-                    <p class="leading-relaxed mb-6 text-gray-700">
+                    <button class="back-button mb-6">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+                        Back to Menu
+                    </button>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3 text-white">Custom Web Portal: Core Features</h2>
+                    <p class="leading-relaxed mb-6 text-gray-300">
                         The project is a full-featured, secure web application, offering advanced functionality for teachers, students, and administration. The core code for these features is approximately 70% complete.
                     </p>
 
-                    <!-- Applied new blue accent classes -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="accent-box-bg p-4 rounded-xl border">
                             <h3 class="text-xl font-bold accent-text-color mb-2">Student Experience</h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+                            <ul class="list-disc list-inside ml-4 text-gray-300 space-y-1">
                                 <li>Secure login via Microsoft (SSO).</li>
                                 <li>Categorized feedback options (Teacher, Policy, Facility, Other).</li>
                                 <li>Flexible anonymity option with traceability for inappropriate content.</li>
@@ -194,7 +267,7 @@
                         </div>
                         <div class="accent-box-bg p-4 rounded-xl border">
                             <h3 class="text-xl font-bold accent-text-color mb-2">Teacher Dashboard</h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+                            <ul class="list-disc list-inside ml-4 text-gray-300 space-y-1">
                                 <li>Real-time, AI-generated summary of feedback trends.</li>
                                 <li>No direct access to raw, identifiable student comments.</li>
                                 <li>Mechanism to request clarification via STUCO intermediary.</li>
@@ -202,7 +275,7 @@
                         </div>
                         <div class="accent-box-bg p-4 rounded-xl border">
                             <h3 class="text-xl font-bold accent-text-color mb-2">Administrative & Security</h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+                            <ul class="list-disc list-inside ml-4 text-gray-300 space-y-1">
                                 <li>Secure Microsoft Azure integration (Client ID/Secret required).</li>
                                 <li>Automated safeguarding triggers for high-risk reports.</li>
                                 <li>STUCO moderation panel for content screening.</li>
@@ -212,181 +285,225 @@
                 </div>
             </section>
 
-            <!-- 4. Development Timeline (REBUILT) -->
-            <section id="timeline" class="tab-content hidden">
+            <!-- 3. Development Timeline -->
+            <section id="timeline" class="hidden-page">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Development Timeline & Status</h2>
-                    <p class="leading-relaxed mb-6 text-gray-700">
+                    <button class="back-button mb-6">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+                        Back to Menu
+                    </button>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3 text-white">Development Timeline & Status</h2>
+                    <p class="leading-relaxed mb-6 text-gray-300">
                         Core development is largely complete. The project is now entering the final integration and deployment phase, which depends on key administrative and IT support.
                     </p>
 
                     <!-- Completed Milestones -->
-                    <h3 class="text-2xl font-bold text-green-600 mb-4">Completed Milestones (Code Complete)</h3>
+                    <h3 class="text-2xl font-bold text-green-400 mb-4">Completed Milestones (Code Complete)</h3>
                     <div class="timeline-container max-w-xl mx-auto py-8">
                         <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">Core API & Database</h3>
-                                <p class="text-sm text-gray-600">File: `app.py`</p>
-                                <p class="text-gray-700 mt-2">Backend logic, database schema (SQLAlchemy), and all API endpoints for feedback, admin, and teachers are built and tested.</p>
+                                <p class="text-sm text-gray-400">File: `app.py`</p>
+                                <p class="text-gray-300 mt-2">Backend logic, database schema (SQLAlchemy), and all API endpoints for feedback, admin, and teachers are built and tested.</p>
                             </div>
                         </div>
                         <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">Student Frontend</h3>
-                                <p class="text-sm text-gray-600">File: `stu_frontend.html`</p>
-                                <p class="text-gray-700 mt-2">Full-featured student submission portal with category selection, dynamic teacher fields, and anonymity controls is complete.</p>
+                                <p class="text-sm text-gray-400">File: `stu_frontend.html`</p>
+                                <p class="text-gray-300 mt-2">Full-featured student submission portal with category selection, dynamic teacher fields, and anonymity controls is complete.</p>
                             </div>
                         </div>
                         <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">Teacher Dashboard</h3>
-                                <p class="text-sm text-gray-600">File: `teach_frontend.html`</p>
-                                <p class="text-gray-700 mt-2">Interface for teachers to view AI summaries, see trends, and request clarification is built and functional.</p>
+                                <p class="text-sm text-gray-400">File: `teach_frontend.html`</p>
+                                <p class="text-gray-300 mt-2">Interface for teachers to view AI summaries, see trends, and request clarification is built and functional.</p>
                             </div>
                         </div>
                         <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-green-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">Admin Moderation Portal</h3>
-                                <p class="text-sm text-gray-600">File: `stuco_admin_dashboard.html`</p>
-                                <p class="text-gray-700 mt-2">STUCO dashboard for moderating, approving, retracting, and deleting feedback is complete.</p>
+                                <p class="text-sm text-gray-400">File: `stuco_admin_dashboard.html`</p>
+                                <p class="text-gray-300 mt-2">STUCO dashboard for moderating, approving, retracting, and deleting feedback is complete.</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Pending Steps -->
-                    <h3 class="text-2xl font-bold text-red-600 mb-4 mt-10">Pending Deployment Steps</h3>
+                    <h3 class="text-2xl font-bold text-red-400 mb-4 mt-10">Pending Deployment Steps</h3>
                      <div class="timeline-container max-w-xl mx-auto py-8">
                         <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">Azure SSO Integration</h3>
-                                <p class="text-sm text-gray-600">Status: <strong class="text-red-600">Blocked</strong> - Awaiting IT Admin</p>
-                                <p class="text-gray-700 mt-2">Need IT to register the app in Azure to get the Client ID & Secret for Microsoft login.</p>
+                                <p class="text-sm text-gray-400">Status: <strong class="text-red-400">Blocked</strong> - Awaiting IT Admin</p>
+                                <p class="text-gray-300 mt-2">Need IT to register the app in Azure to get the Client ID & Secret for Microsoft login.</p>
                             </div>
                         </div>
                          <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">Teacher List Integration</h3>
-                                <p class="text-sm text-gray-600">Status: <strong class="text-red-600">Blocked</strong> - Awaiting School Admin</p>
-                                <p class="text-gray-700 mt-2">Need the complete list of all teachers and their year-level allocations to populate the database.</p>
+                                <p class="text-sm text-gray-400">Status: <strong class="text-red-400">Blocked</strong> - Awaiting School Admin</p>
+                                <p class="text-gray-300 mt-2">Need the complete list of all teachers and their year-level allocations to populate the database.</p>
                             </div>
                         </div>
                          <div class="timeline-item my-8">
                             <div class="timeline-dot top-0 -mt-2 bg-yellow-500"></div>
-                            <div class="p-4 bg-gray-50 rounded-lg shadow-sm border border-gray-200">
+                            <div class="p-4 bg-[#1f2937] rounded-lg shadow-sm border border-gray-700">
                                 <h3 class="text-xl font-semibold accent-text-color">School Server Setup</h3>
-                                <p class="text-sm text-gray-600">Status: <strong class="text-red-600">Blocked</strong> - Awaiting IT Admin</p>
-                                <p class="text-gray-700 mt-2">Need a dedicated server/host environment from the school to deploy the Python API (`app.py`) and database.</p>
+                                <p class="text-sm text-gray-400">Status: <strong class="text-red-400">Blocked</strong> - Awaiting IT Admin</p>
+                                <p class="text-gray-300 mt-2">Need a dedicated server/host environment from the school to deploy the Python API (`app.py`) and database.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 5. Teacher Interface Mockup (Now includes AI Summary) -->
-            <section id="dashboard-mock" class="tab-content hidden">
-                <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Teacher Dashboard: AI Feedback Summary</h2>
-                    <p class="leading-relaxed mb-6 text-gray-700">
-                        This is a mockup of the final AI-powered summary interface. The core feature for teachers is a positive, moderated summary of constructive feedback, focusing on key strengths and growth opportunities.
-                    </p>
-
-                    <!-- Mock AI Summary Cards -->
-                    <div class="space-y-6">
-                        <!-- Strengths -->
-                        <div class="p-6 rounded-xl bg-green-50 border-l-4 border-green-500 shadow-md">
-                            <h3 class="text-2xl font-semibold text-green-700 mb-3 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.774a3.001 3.001 0 011.834 5.378l-2.32 1.34A5 5 0 0012 21H8a2 2 0 01-2-2v-4a2 2 0 012-2h4a2 2 0 002-2z" />
-                                </svg>
-                                Key Strengths (17 Positive Reports)
-                            </h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-800 space-y-2">
-                                <li><strong class="font-semibold">Clarity of Explanations:</strong> Students frequently highlight how your use of real-world examples and visual aids makes complex topics easy to grasp.</li>
-                                <li><strong class="font-semibold">Supportive Environment:</strong> The vast majority of feedback praises the welcoming and non-judgemental atmosphere you cultivate, encouraging questions.</li>
-                                <li><strong class="font-semibold">Fairness:</strong> No negative reports regarding fairness; consistent positive remarks on assignment grading and classroom management rules.</li>
-                            </ul>
+            <!-- 4. Teacher Interface Mockup (REBUILT) -->
+            <section id="dashboard-mock" class="hidden-page">
+                <div class="p-6 md:p-10"> <!-- Removed card class to make it full-width -->
+                    <button class="back-button mb-6">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+                        Back to Menu
+                    </button>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Column (Metrics & Trends) -->
+                        <div class="lg:col-span-1 space-y-8">
+                             <div class="card p-6 rounded-3xl shadow-xl border">
+                                <h3 class="text-xl font-bold text-white mb-4 border-b border-gray-700 pb-3">Key Metrics (Mockup)</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center p-4 bg-[#1f2937] rounded-2xl">
+                                        <span class="text-base text-gray-300 font-medium">Total Feedback Received</span>
+                                        <span class="text-3xl font-extrabold text-[#60a5fa]">42</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-4 bg-[#1f2937] rounded-2xl">
+                                        <span class="text-base text-gray-300 font-medium">Last Summary Update</span>
+                                        <span class="text-lg font-semibold text-white">Today</span>
+                                    </div>
+                                </div>
+                                <button class="w-full py-2.5 mt-4 bg-yellow-500 text-white font-semibold rounded-2xl shadow-md hover:bg-yellow-600 transition">
+                                     Request Clarification
+                                </button>
+                            </div>
+                            
+                            <div class="card p-6 rounded-3xl shadow-xl border">
+                                <h2 class="text-xl font-bold text-white mb-2">Teaching Practice Trends</h2>
+                                <p class="text-sm text-gray-400 mb-4">Thematic analysis of feedback scores.</p>
+                                 <div class="trend-chart-container">
+                                     <canvas id="trendChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Growth Opportunities -->
-                        <div class="p-6 rounded-xl bg-amber-50 border-l-4 border-amber-500 shadow-md">
-                            <h3 class="text-2xl font-semibold text-amber-700 mb-3 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Growth Opportunities (5 Actionable Suggestions)
-                            </h3>
-                            <ul class="list-disc list-inside ml-4 text-gray-800 space-y-2">
-                                <li><strong class="font-semibold">Pacing of Lessons:</strong> Several students suggested slowing down the introduction of new concepts, particularly on Fridays.</li>
-                                <li><strong class="font-semibold">Resource Availability:</strong> There were requests for digital copies of worksheets or notes to be uploaded to the school portal before the lesson.</li>
-                                <li><strong class="font-semibold">Group Work:</strong> Feedback suggested more variety in grouping strategies to avoid working with the same peers every time.</li>
-                            </ul>
+            
+                         <!-- Right Column (AI Summary) -->
+                         <div class="lg:col-span-2 card p-8 rounded-3xl shadow-xl border">
+                            <h2 class="text-2xl font-bold text-white mb-4">Holistic AI Summary for <span class="text-[#60a5fa]">Mock Teacher</span></h2>
+                            <p class="text-sm text-red-400 bg-red-900/20 border border-red-500/30 p-3 rounded-2xl mb-6">
+                                <strong class="text-red-300">Privacy Notice:</strong> This is an anonymized, holistic summary of all student feedback. This report is auto-approved and will update as new feedback is received.
+                            </p>
+                            
+                            <div class="space-y-8">
+                                <div class="p-6 bg-green-900/20 border-l-4 border-green-500 rounded-2xl shadow-sm">
+                                    <h3 class="text-xl font-semibold text-green-400 mb-4 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9.53 7.185A2.25 2.25 0 0 1 12 9.5v.251a.75.75 0 0 0 1.5 0v-.251a3.75 3.75 0 1 0-7.472-1.284.75.75 0 1 0 1.341.597 2.25 2.25 0 0 1 4.532.709Z" clip-rule="evenodd" />
+                                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5Z" clip-rule="evenodd" />
+                                        </svg>
+                                        Positive & Neutral Highlights
+                                    </h3>
+                                    <ul class="list-disc list-inside ml-4 text-gray-200 space-y-2">
+                                        <li><strong class="font-semibold text-white">Clarity of Explanations:</strong> Students frequently highlight how your use of real-world examples and visual aids makes complex topics easy to grasp.</li>
+                                        <li><strong class="font-semibold text-white">Supportive Environment:</strong> The vast majority of feedback praises the welcoming and non-judgemental atmosphere you cultivate, encouraging questions.</li>
+                                        <li><strong class="font-semibold text-white">Fairness:</strong> No negative reports regarding fairness; consistent positive remarks on assignment grading and classroom management rules.</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="p-6 bg-yellow-900/20 border-l-4 border-yellow-500 rounded-2xl shadow-sm">
+                                    <h3 class="text-xl font-semibold text-yellow-400 mb-4 flex items-center">
+                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+                                             <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM5.47 7.027a.75.75 0 0 1 1.06 0L10 10.487l3.47-3.46a.75.75 0 0 1 1.06 1.06l-4 4a.75.75 0 0 1-1.06 0l-4-4a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                        </svg>
+                                        Actionable Growth Opportunities
+                                    </h3>
+                                    <ul class="list-disc list-inside ml-4 text-gray-200 space-y-2">
+                                        <li><strong class="font-semibold text-white">Pacing of Lessons:</strong> Several students suggested slowing down the introduction of new concepts, particularly on Fridays.</li>
+                                        <li><strong class="font-semibold text-white">Resource Availability:</strong> There were requests for digital copies of worksheets or notes to be uploaded to the school portal before the lesson.</li>
+                                        <li><strong class="font-semibold text-white">Group Work:</strong> Feedback suggested more variety in grouping strategies to avoid working with the same peers every time.</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
             
-            <!-- 6. NEW SECTION: Administrative Requests (Replaces AI Funding) -->
-            <section id="admin-requests" class="tab-content hidden">
+            <!-- 5. Administrative Requests -->
+            <section id="admin-requests" class="hidden-page">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
-                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-200 pb-3">Administrative Requests</h2>
-                    <p class="leading-relaxed mb-6 text-gray-700">
+                    <button class="back-button mb-6">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" /></svg>
+                        Back to Menu
+                    </button>
+                    <h2 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3 text-white">Administrative Requests</h2>
+                    <p class="leading-relaxed mb-6 text-gray-300">
                        With core development complete, the project's launch is now dependent on the following key administrative and IT resources.
                     </p>
 
                     <!-- Technical & Data Requests -->
                     <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">1. Technical & Data Dependencies (Blocked)</h3>
-                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner text-gray-700 mb-6">
+                    <div class="accent-box-bg p-6 rounded-xl border shadow-inner text-gray-300 mb-6">
                         <div class="space-y-4">
                             <div>
-                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-red-500 mr-2 text-xl">🛡️</span> Dedicated Server Access
+                                <h4 class="font-bold text-white flex items-center mb-1">
+                                    <span class="text-red-400 mr-2 text-xl">🛡️</span> Dedicated Server Access
                                 </h4>
-                                <p class="text-gray-700 ml-4">We require allocation of a permanent, secure school server (or equivalent virtual host/IP address) to deploy the Python API (`app.py`) and host the production database.</p>
+                                <p class="text-gray-300 ml-4">We require allocation of a permanent, secure school server (or equivalent virtual host/IP address) to deploy the Python API (`app.py`) and host the production database.</p>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-red-500 mr-2 text-xl">🔑</span> Microsoft Azure (SSO) Integration
+                                <h4 class="font-bold text-white flex items-center mb-1">
+                                    <span class="text-red-400 mr-2 text-xl">🔑</span> Microsoft Azure (SSO) Integration
                                 </h4>
-                                <p class="text-gray-700 ml-4">We require IT to register the application in the school's Azure portal to provide the <strong class="font-semibold">Client ID</strong> and <strong class="font-semibold">Client Secret</strong> needed for Microsoft login.</p>
+                                <p class="text-gray-300 ml-4">We require IT to register the application in the school's Azure portal to provide the <strong class="font-semibold">Client ID</strong> and <strong class="font-semibold">Client Secret</strong> needed for Microsoft login.</p>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-red-500 mr-2 text-xl">📋</span> Complete Teacher List
+                                <h4 class="font-bold text-white flex items-center mb-1">
+                                    <span class="text-red-400 mr-2 text-xl">📋</span> Complete Teacher List
                                 </h4>
-                                <p class="text-gray-700 ml-4">We need a <strong class="font-semibold">full list of every teacher's name and email</strong>, plus their year-level allocations, to populate the database and enable correct feedback routing.</p>
+                                <p class="text-gray-300 ml-4">We need a <strong class="font-semibold">full list of every teacher's name and email</strong>, plus their year-level allocations, to populate the database and enable correct feedback routing.</p>
                             </div>
                         </div>
                     </div>
                     
                     <!-- AI Funding Request -->
                     <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">2. AI Funding Request (Monthly)</h3>
-                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-200 shadow-inner text-gray-700 mb-6">
-                        <p class="text-lg font-bold mb-4">Total Estimated Cost: <span class="text-red-600 font-extrabold">$21.49 / month</span></p>
+                    <div class="accent-box-bg p-6 rounded-xl border shadow-inner text-gray-300 mb-6">
+                        <p class="text-lg font-bold mb-4">Total Estimated Cost: <span class="text-red-400 font-extrabold">$21.49 / month</span></p>
 
                         <div class="space-y-4">
                             <div>
-                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-blue-500 mr-2 text-xl">🚀</span> Gemini 3 Pro Subscription ($19.99/mo)
+                                <h4 class="font-bold text-white flex items-center mb-1">
+                                    <span class="text-blue-400 mr-2 text-xl">🚀</span> Gemini 3 Pro Subscription ($19.99/mo)
                                 </h4>
-                                <p class="text-gray-700 ml-4">Access to <strong class="font-semibold">Gemini 3 Pro</strong>, an incredibly powerful new model that excels at coding and complex reasoning, is essential for generating the high-quality, nuanced teacher summaries.</p>
+                                <p class="text-gray-300 ml-4">Access to <strong class="font-semibold">Gemini 3 Pro</strong>, an incredibly powerful new model that excels at coding and complex reasoning, is essential for generating the high-quality, nuanced teacher summaries.</p>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-900 flex items-center mb-1">
-                                    <span class="text-blue-500 mr-2 text-xl">🛡️</span> DeepSeek API Usage ($1.50/mo)
+                                <h4 class="font-bold text-white flex items-center mb-1">
+                                    <span class="text-blue-400 mr-2 text-xl">🛡️</span> DeepSeek API Usage ($1.50/mo)
                                 </h4>
-                                <p class="text-gray-700 ml-4">Used for low-cost, high-volume <span class="font-bold">sentiment analysis</span> and <span class="font-bold">toxicity scoring</span> of every comment *before* it's sent to Gemini, saving significant operational costs.</p>
+                                <p class="text-gray-300 ml-4">Used for low-cost, high-volume <span class="font-bold">sentiment analysis</span> and <span class="font-bold">toxicity scoring</span> of every comment *before* it's sent to Gemini, saving significant operational costs.</p>
                             </div>
                         </div>
                     </div>
 
-                    <h3 class="text-2xl font-bold mt-8 mb-4 border-b border-gray-200 pb-3">Action Items for Board Consideration</h3>
-                    <ol class="list-decimal list-inside ml-4 space-y-3 text-gray-700">
+                    <h3 class="text-2xl font-bold text-white mt-8 mb-4 border-b border-gray-700 pb-3">Action Items for Board Consideration</h3>
+                    <ol class="list-decimal list-inside ml-4 space-y-3 text-gray-300">
                         <li><strong class="font-semibold">Approve funding</strong> for the dual-AI model budget (<strong class="font-semibold">$21.49/month</strong>).</li>
                         <li><strong class="font-semibold">Direct IT</strong> to provide server access and Azure SSO credentials.</li>
                         <li><strong class="font-semibold">Direct Admin</strong> to provide the complete all-staff teacher list.</li>
@@ -399,69 +516,64 @@
         </main>
     </div>
 
-    <!-- JavaScript for Tab Switching, Chart Initialization, and Scroll Effect -->
+    <!-- JavaScript for Menu Switching, Chart Initialization, and Scroll Effect -->
     <script>
-        let radarChart = null; // Variable to hold the Chart.js instance
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
+        let radarChart = null; // Variable for Executive Summary chart
+        let trendChart = null; // Variable for Teacher Trend chart
+        
+        const menuButtons = document.querySelectorAll('#main-menu .capsule-btn');
+        const contentSections = document.querySelectorAll('main > section');
+        const backButtons = document.querySelectorAll('.back-button');
+        const mainMenu = document.getElementById('main-menu');
         const mainHeader = document.getElementById('main-header');
         
         // --- SCROLL EFFECT LOGIC ---
         function handleScroll() {
             const scrollY = window.scrollY;
-            const scrollLimit = 150; // Distance in pixels before the effect is complete
+            const scrollLimit = 150; 
 
             if (scrollY <= scrollLimit) {
-                // Calculate opacity (1.0 to 0.0)
                 const opacity = 1 - (scrollY / scrollLimit);
-                // Calculate scale (1.0 to 0.9) - slight zoom out
                 const scale = 1 - (scrollY / scrollLimit) * 0.1; 
-
                 mainHeader.style.opacity = opacity;
                 mainHeader.style.transform = `scale(${scale})`;
             } else {
-                // Ensure it stays faded and scaled once scroll limit is passed
                 mainHeader.style.opacity = 0;
                 mainHeader.style.transform = 'scale(0.9)';
             }
         }
 
-        // Add the scroll event listener
         window.addEventListener('scroll', handleScroll);
-        // Run once on load to set the initial state if the user starts scrolled down
         document.addEventListener('DOMContentLoaded', handleScroll);
         // ---------------------------
 
+        // --- CHART COLORS (DARK MODE) ---
+        const accentColor = '#60a5fa'; // Light Blue
+        const gridColor = 'rgba(255, 255, 255, 0.2)';
+        const labelColor = '#e5e7eb'; // Light Gray
+        const cardBgColor = '#1a1f3a'; // Dark card background
+
+        // Mock Data for both charts
+        const mockLabels = ['Clarity of Instruction', 'Classroom Engagement', 'Student Support Access', 'Fairness & Consistency', 'Subject Knowledge'];
+        const mockDataScores = [4.7, 3.2, 3.8, 4.5, 4.9];
+            
         /**
-         * Initializes the Chart.js Radar Chart. This is called when the 'summary' 
-         * tab is first activated.
+         * Initializes the Executive Summary Radar Chart.
          */
         function initializeChart() {
-            // Find the canvas element inside the 'summary' section
             const chartCanvas = document.getElementById('feedbackRadarChart');
-
-            if (radarChart || !chartCanvas) {
-                // Chart is already initialized or canvas not found
+            if (radarChart || !chartCanvas) { // Check if chart already exists
                 return;
             }
-
             const ctx = chartCanvas.getContext('2d');
             
-            // Mock Data
-            const labels = ['Clarity of Instruction', 'Classroom Engagement', 'Student Support Access', 'Fairness & Consistency', 'Subject Knowledge'];
-            const dataScores = [4.7, 3.2, 3.8, 4.5, 4.9];
-            
-            // Define the medium blue accent color
-            const accentColor = '#3b82f6';
-
             radarChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: labels,
+                    labels: mockLabels,
                     datasets: [{
                         label: 'Average Score (Scale 1-5)',
-                        data: dataScores,
-                        // Chart colors use the blue accent
+                        data: mockDataScores,
                         backgroundColor: 'rgba(59, 130, 246, 0.2)', 
                         borderColor: accentColor, 
                         pointBackgroundColor: accentColor,
@@ -475,22 +587,16 @@
                     maintainAspectRatio: false,
                     scales: {
                         r: {
-                            angleLines: {
-                                color: '#e5e7eb' 
-                            },
-                            grid: {
-                                color: '#e5e7eb'
-                            },
+                            angleLines: { color: gridColor },
+                            grid: { color: gridColor },
                             pointLabels: {
-                                color: '#374151', 
-                                font: {
-                                    size: 14
-                                }
+                                color: labelColor, 
+                                font: { size: 14 }
                             },
                             ticks: {
                                 beginAtZero: true,
-                                color: '#6b7280', 
-                                backdropColor: 'white', 
+                                color: labelColor, 
+                                backdropColor: cardBgColor, 
                                 max: 5.0, 
                                 stepSize: 1.0,
                             }
@@ -499,59 +605,122 @@
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#374151'
+                                color: labelColor
                             }
                         }
                     }
                 }
             });
-            console.log("Chart.js Radar Chart initialized in Summary tab.");
+            console.log("Chart.js Summary Chart initialized.");
+        }
+        
+        /**
+         * Initializes the Teacher Trend Radar Chart.
+         */
+        function initializeTrendChart() {
+            const chartCanvas = document.getElementById('trendChart');
+            if (trendChart || !chartCanvas) { // Check if chart already exists
+                return;
+            }
+            const ctx = chartCanvas.getContext('2d');
+            
+            trendChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: mockLabels, // Using same mock data
+                    datasets: [{
+                        label: 'Feedback Score (Higher is Better)',
+                        data: mockDataScores, // Using same mock data
+                        fill: true,
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)', 
+                        borderColor: accentColor,
+                        pointBackgroundColor: accentColor,
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: accentColor
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                        line: { borderWidth: 3 }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: { color: gridColor },
+                            grid: { color: gridColor },
+                            pointLabels: { font: { size: 12, family: 'Inter' }, color: labelColor },
+                            suggestedMin: 0, 
+                            suggestedMax: 5.0, // Matched to other chart
+                            ticks: { display: false } // Hide ticks as per teach_frontend.html
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }, // Hide legend as per teach_frontend.html
+                        tooltip: {
+                             backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                             titleFont: { family: 'Inter' },
+                             bodyFont: { family: 'Inter' },
+                        }
+                    }
+                }
+            });
+            console.log("Chart.js Trend Chart initialized.");
         }
 
+
         /**
-         * Handles the main tab switching logic.
+         * Handles the new main menu navigation logic.
          */
-        function showTab(targetId) {
-            // 1. Hide all content and deactivate all buttons
-            tabContents.forEach(content => {
-                content.classList.add('hidden');
-            });
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
+        function showPage(targetId) {
+            mainMenu.classList.add('hidden-page');
+            contentSections.forEach(section => {
+                section.classList.add('hidden-page');
             });
 
-            // 2. Show the target content and activate the clicked button
             const targetContent = document.getElementById(targetId);
             if (targetContent) {
-                targetContent.classList.remove('hidden');
-            }
-            const activeButton = document.querySelector(`.tab-button[data-target="${targetId}"]`);
-            if (activeButton) {
-                activeButton.classList.add('active');
+                targetContent.classList.remove('hidden-page');
+                window.scrollTo(0, 0); // Scroll to top
             }
 
-            // 3. Special case: Initialize chart if the summary tab is opened
+            // Initialize charts based on which page is shown
             if (targetId === 'summary') {
                 initializeChart();
             }
+            if (targetId === 'dashboard-mock') {
+                initializeTrendChart();
+            }
         }
 
-        // Add event listeners to all tab buttons
-        tabButtons.forEach(button => {
+        function showMenu() {
+            contentSections.forEach(section => {
+                section.classList.add('hidden-page');
+            });
+            mainMenu.classList.remove('hidden-page');
+            window.scrollTo(0, 0); // Scroll to top
+        }
+
+
+        // Add event listeners to all main menu buttons
+        menuButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const targetId = button.getAttribute('data-target');
-                showTab(targetId);
+                showPage(targetId);
             });
         });
 
-        // Initialize by ensuring the first tab is visible on load
+        // Add event listeners to all "Back" buttons
+        backButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                showMenu();
+            });
+        });
+
+        // Initialize by showing the menu by default
         document.addEventListener('DOMContentLoaded', () => {
-            // Check if there is an active tab already, if not, set 'summary' as default
-            const initialTab = document.querySelector('.tab-button.active') || document.querySelector('.tab-button[data-target="summary"]');
-            if (initialTab) {
-                const initialTarget = initialTab.getAttribute('data-target');
-                showTab(initialTarget);
-            }
+            showMenu();
         });
 
     </script>
