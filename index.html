@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUCO Feedback Portal Dashboard</title>
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -169,13 +169,10 @@
         </header>
 
         <!-- NEW: Main Menu (Hub) -->
-        <!-- UPDATED: max-w-3xl (smaller box), gap-3 (tighter rows) -->
         <div id="main-menu" class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="bg-[#1a1f3a] p-10 sm:p-14 rounded-3xl shadow-2xl text-center">
-                <!-- REMOVED "Project Dashboard Navigation" text -->
                 
                 <!-- Button Grid -->
-                <!-- UPDATED: gap-3 -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div class="flex justify-center">
                         <button data-target="summary" class="capsule-btn text-white ai-gradient">
@@ -444,7 +441,7 @@
                 </div>
             </section>
             
-            <!-- 5. Administrative Requests -->
+            <!-- 5. Administrative Requests (UPDATED) -->
             <section id="admin-requests" class="hidden-page">
                 <div class="card p-6 md:p-10 rounded-xl shadow-lg border">
                     <button class="back-button mb-6">
@@ -481,7 +478,7 @@
                         </div>
                     </div>
                     
-                    <!-- AI Funding Request -->
+                    <!-- AI Funding Request (UPDATED) -->
                     <h3 class="text-2xl font-semibold accent-text-color mb-4 mt-6">2. AI Funding Request (Monthly)</h3>
                     <div class="accent-box-bg p-6 rounded-xl border shadow-inner text-gray-300 mb-6">
                         <p class="text-lg font-bold mb-4">Total Estimated Cost: <span class="text-red-400 font-extrabold">$21.49 / month</span></p>
@@ -489,22 +486,24 @@
                         <div class="space-y-4">
                             <div>
                                 <h4 class="font-bold text-white flex items-center mb-1">
-                                    <span class="text-blue-400 mr-2 text-xl">🚀</span> Gemini 3 Pro Subscription ($19.99/mo)
+                                    <span class="text-blue-400 mr-2 text-xl">🚀</span> Gemini 3 Pro (Developer Tool) - $19.99/mo
                                 </h4>
-                                <p class="text-gray-300 ml-4">Access to <strong class="font-semibold">Gemini 3 Pro</strong>, an incredibly powerful new model that excels at coding and complex reasoning, is essential for generating the high-quality, nuanced teacher summaries.</p>
+                                <!-- UPDATED DESCRIPTION -->
+                                <p class="text-gray-300 ml-4">This cost is for the <strong class="font-semibold">STUCO development team</strong>. Access to the Gemini 3 Pro model in the Google Canvas (this environment) is essential for developing, debugging, and maintaining the project's code.</p>
                             </div>
                             <div>
                                 <h4 class="font-bold text-white flex items-center mb-1">
-                                    <span class="text-blue-400 mr-2 text-xl">🛡️</span> DeepSeek API Usage ($1.50/mo)
+                                    <span class="text-blue-400 mr-2 text-xl">🛡️</span> DeepSeek API (Production API) - $1.50/mo
                                 </h4>
-                                <p class="text-gray-300 ml-4">Used for low-cost, high-volume <span class="font-bold">sentiment analysis</span> and <span class="font-bold">toxicity scoring</span> of every comment *before* it's sent to Gemini, saving significant operational costs.</p>
+                                <!-- UPDATED DESCRIPTION -->
+                                <p class="text-gray-300 ml-4">This is the <strong class="font-semibold">only AI that runs in the live application</strong>. It cost-effectively handles 100% of production tasks, including toxicity screening and all holistic teacher summarization.</p>
                             </div>
                         </div>
                     </div>
 
                     <h3 class="text-2xl font-bold text-white mt-8 mb-4 border-b border-gray-700 pb-3">Action Items for Board Consideration</h3>
                     <ol class="list-decimal list-inside ml-4 space-y-3 text-gray-300">
-                        <li><strong class="font-semibold">Approve funding</strong> for the dual-AI model budget (<strong class="font-semibold">$21.49/month</strong>).</li>
+                        <li><strong class="font-semibold">Approve funding</strong> for the dual-AI budget (<strong class="font-semibold">$21.49/month</strong>).</li>
                         <li><strong class="font-semibold">Direct IT</strong> to provide server access and Azure SSO credentials.</li>
                         <li><strong class="font-semibold">Direct Admin</strong> to provide the complete all-staff teacher list.</li>
                         <li><strong class="font-semibold">Provide guidance</strong> on centralized procurement for the AI services and secure API key management.</li>
